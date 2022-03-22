@@ -8,31 +8,32 @@ import cv2
 import math
 
 #Config Values
-SOURCE = '1'
+SOURCE = '0'
 CONF_THRES = 0.1
 IOU_THRES = 0.4
 CLASSES = None
 MAX_DET = 1
-FOCAL_LENGTH = 550;
+FOCAL_LENGTH = 670;
+
+#Path of the model:
+MODEL_PATH = 'required/best.tflite' #change it to whichever you want to test to i.e. .tflite, .pb(tensorflow) or .pt(pytorch)
 
 #Config parameters
-def empty():
-    pass
 cv2.namedWindow("Parameters")
 cv2.resizeWindow("Parameters", 640,240)
-cv2.createTrackbar("CONF_THRES", "Parameters", 10, 100,empty)
-cv2.createTrackbar("IOU_THRES", "Parameters", 20, 100,empty)
-cv2.createTrackbar("MAX_DET", "Parameters", 1, 10,empty)
-cv2.createTrackbar("FOCAL_LENGTH", "Parameters", 560, 1000,empty)
+cv2.createTrackbar("CONF_THRES", "Parameters", 10, 100,(lambda a: None))
+cv2.createTrackbar("IOU_THRES", "Parameters", 20, 100,(lambda a: None))
+cv2.createTrackbar("MAX_DET", "Parameters", 1, 10,(lambda a: None))
+cv2.createTrackbar("FOCAL_LENGTH", "Parameters", 560, 1000,(lambda a: None))
 
 #Load model
-model = DetectMultiBackend('best.pt') # load model best.pt
+model = DetectMultiBackend(MODEL_PATH) # load model best.pt
 stride, names, pt = model.stride, model.names, model.pt
 print("Model Loaded...")
 
 model.warmup() #warming up model
 
-dataset = LoadStreams(SOURCE, img_size=(640,640), stride=stride, auto=pt)
+dataset = LoadStreams(SOURCE, img_size=(320,320), stride=stride, auto=pt)
 
 #running interfene
 dt, seen = [0.0, 0.0, 0.0], 0
@@ -109,6 +110,3 @@ for path, im, im0s, vid_cap, s in dataset:
             cv2.imshow(str(p), im0)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
-            
-            
-pred
