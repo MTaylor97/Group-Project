@@ -16,7 +16,7 @@ MAX_DET = 1
 FOCAL_LENGTH = 670;
 
 #Path of the model:
-MODEL_PATH = 'required/best.tflite' #change it to whichever you want to test to i.e. .tflite, .pb(tensorflow) or .pt(pytorch)
+MODEL_PATH = 'required/bestv3.tflite' #change it to whichever you want to test to i.e. .tflite, .pb(tensorflow) or .pt(pytorch)
 
 #Config parameters
 cv2.namedWindow("Parameters")
@@ -33,7 +33,7 @@ print("Model Loaded...")
 
 model.warmup() #warming up model
 
-dataset = LoadStreams(SOURCE, img_size=(320,320), stride=stride, auto=pt)
+dataset = LoadStreams('SOURCE', img_size=160, stride=stride, auto=pt)
 
 #running interfene
 dt, seen = [0.0, 0.0, 0.0], 0
@@ -74,7 +74,7 @@ for path, im, im0s, vid_cap, s in dataset:
                 for c in det[:, -1].unique():
                     n = (det[:, -1] == c).sum()  # detections per class
                     s += f"{n} {names[int(c)]}{'s' * (n > 1)}, "  # add to string
-
+                    
                 # Write results
                 for *xyxy, conf, cls in reversed(det):
                     FOCAL_LENGTH = cv2.getTrackbarPos("FOCAL_LENGTH", "Parameters")
