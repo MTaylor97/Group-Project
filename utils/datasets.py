@@ -304,7 +304,7 @@ class LoadStreams:
                 check_requirements(('pafy', 'youtube_dl==2020.12.2'))
                 import pafy
                 s = pafy.new(s).getbest(preftype="mp4").url  # YouTube URL
-            s = eval(s) if s.isnumeric() else s  # i.e. s = '0' local webcam
+            s = eval(s) if s.isnumeric() else i  # i.e. s = '0' local webcam
             cap = cv2.VideoCapture(s)
             assert cap.isOpened(), f'{st}Failed to open {s}'
             w = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
