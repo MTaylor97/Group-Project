@@ -108,5 +108,5 @@ for path, im, im0s, vid_cap, s in dataset:
             # Stream results
             im0 = annotator.result()
             cv2.imshow(str(p), im0)
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                break
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
