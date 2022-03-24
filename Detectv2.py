@@ -33,7 +33,7 @@ print("Model Loaded...")
 
 model.warmup() #warming up model
 
-dataset = LoadStreams('SOURCE', img_size=160, stride=stride, auto=pt)
+dataset = LoadStreams(SOURCE, img_size=160, stride=stride, auto=pt)
 
 #running interfene
 dt, seen = [0.0, 0.0, 0.0], 0
