@@ -16,7 +16,7 @@ MAX_DET = 1
 FOCAL_LENGTH = 670;
 
 #Path of the model:
-MODEL_PATH = 'required/bestv3.tflite' #change it to whichever you want to test to i.e. .tflite, .pb(tensorflow) or .pt(pytorch)
+MODEL_PATH = 'required/bestv3.pt' #change it to whichever you want to test to i.e. .tflite, .pb(tensorflow) or .pt(pytorch)
 
 #Config parameters
 cv2.namedWindow("Parameters")
