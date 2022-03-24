@@ -3,7 +3,7 @@ import spritesheet
 import constants
 import math
 
-joes_art = pygame.image.load(r"Images\Spritesheet.png")#.convert_alpha()
+joes_art = pygame.image.load(r"Images/Spritesheet.png")#.convert_alpha()
 sprite_sheet = spritesheet.SpriteSheet(joes_art)
 
 class Bus(pygame.sprite.Sprite):
