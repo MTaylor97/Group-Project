@@ -89,7 +89,9 @@ for path, im, im0s, vid_cap, s in dataset:    #Iterate through Frames
                 for c in det[:, -1].unique():
                     n = (det[:, -1] == c).sum()  # detections per class
                     s += f"{n} {names[int(c)]}{'s' * (n > 1)}, "  # add to string
-                    
+                
+                GUI.run_1_loop()   #Display sprites before next batch is processed
+
                 # Write results
                 for *xyxy, conf, cls in reversed(det):
                     FOCAL_LENGTH = cv2.getTrackbarPos("FOCAL_LENGTH", "Parameters")
@@ -124,7 +126,7 @@ for path, im, im0s, vid_cap, s in dataset:    #Iterate through Frames
                     cv2.putText(im0, str(dRounded)+'cm', (a, b), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 255), 2)
 
                     GUI.add_obj(Obstacle(str(names[c]), thetaRounded, d ))
-                GUI.run_1_loop()
+                
 
 
 

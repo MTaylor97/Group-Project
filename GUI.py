@@ -29,14 +29,16 @@ class GUI:
 
     
     def run_1_loop(self):
-        self.all_sprites.empty()
-        self.all_sprites.add(self.bus)
+        # self.all_sprites.empty()
+        # self.all_sprites.add(self.bus)
         self.all_sprites.update()
         pygame.display.update()
-
         self.screen.fill(constants.white)
         self.draw_distances()
         self.all_sprites.draw(self.screen)
+
+        self.all_sprites.empty()
+        self.all_sprites.add(self.bus)
 
 
     def draw_distance(self):
