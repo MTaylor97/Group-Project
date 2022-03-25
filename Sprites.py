@@ -21,7 +21,7 @@ class Obstacle(pygame.sprite.Sprite):
         self.type = type
         self.angle = angle
         self.distance = distance
-        self.distance_sf = 25 #10pixels == 1cm. So it's 24cm from middle of bus to top of screen.
+        self.distance_sf = 10 #10pixels == 1cm. So it's 24cm from middle of bus to top of screen.
 
         if angle > 0:
             self.x = (constants.WIDTH/2) + round(math.sin(abs(angle)))*distance*self.distance_sf
