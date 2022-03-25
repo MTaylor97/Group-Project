@@ -103,11 +103,10 @@ for path, im, im0s, vid_cap, s in dataset:    #Iterate through Frames
                     dRounded = round(d, 1)
                     horiz = ((abs(320-xmid))*2.8)/(x2-x1)
                     theta = math.degrees(math.atan(horiz/d))
-
                     if xmid < 320:
                         theta = theta * -1
                     thetaRounded = int(theta)
-                    thetaStr = str(round(math.degrees(theta)))+ ' degrees'
+                    thetaStr = str(round(theta))+ ' degrees'
                     p1 = xmid, y2
                     p2 = 320, 480
                     p3 = 320, y2
