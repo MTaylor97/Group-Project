@@ -50,9 +50,9 @@ GUI = GUI()
 #running interfene
 dt, seen = [0.0, 0.0, 0.0], 0
 for path, im, im0s, vid_cap, s in dataset:    #Iterate through Frames
-        # GUI.all_sprites.empty()
-        # GUI.all_sprites.add(GUI.bus)
-       # GUI.screen.fill((255,255,255))
+        GUI.all_sprites.empty()
+        GUI.all_sprites.add(GUI.bus)
+        #GUI.screen.fill((255,255,255))
         t1 = time_sync()
         im = torch.from_numpy(im)
         im = im.half() if model.fp16 else im.float()  # uint8 to fp16/32
@@ -124,7 +124,7 @@ for path, im, im0s, vid_cap, s in dataset:    #Iterate through Frames
                     cv2.putText(im0, str(dRounded)+'cm', (a, b), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 255), 2)
 
                     GUI.add_obj(Obstacle(str(names[c]), thetaRounded, d ))
-                GUI.run_1_loop()
+                    GUI.run_1_loop()
 
 
 
