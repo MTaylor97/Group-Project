@@ -29,6 +29,8 @@ class GUI:
 
     
     def run_1_loop(self):
+        self.all_sprites.empty()
+        self.all_sprites.add(self.bus)
         self.all_sprites.update()
         pygame.display.update()
 
