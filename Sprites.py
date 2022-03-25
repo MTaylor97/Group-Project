@@ -24,14 +24,14 @@ class Obstacle(pygame.sprite.Sprite):
         self.distance_sf = 10 #10pixels == 1cm. So it's 24cm from middle of bus to top of screen.
 
         if angle > 0:
-            self.x = (constants.WIDTH/2) + round(math.sin(abs(angle)))*distance*self.distance_sf
-            print(self.x)
+            self.x = (constants.WIDTH/2) + math.sin(math.radians(angle))*distance*self.distance_sf
+            #print(self.x)
         else:
-            self.x = (constants.WIDTH/2) - round(math.sin(abs(angle)))*distance*self.distance_sf
-            print(self.x)
+            self.x = (constants.WIDTH/2) + math.sin(math.radians(angle))*distance*self.distance_sf
+            #print(self.x)
 
-        self.y = (constants.HEIGHT/2) - round(math.cos(abs(angle)))*distance*self.distance_sf
-        print(self.y)
+        self.y = (constants.HEIGHT/2) - math.cos(math.radians(angle))*distance*self.distance_sf
+        #print(self.y)
 
         if self.type == 'person':
             self.image = sprite_sheet.get_image(30, 0, 9,23, 4, constants.white).convert_alpha()

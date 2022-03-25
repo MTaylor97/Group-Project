@@ -18,8 +18,8 @@ import constants
 
 
 #Config Values
-#SOURCE = '0'
-SOURCE = "https://www.youtube.com/watch?v=-Np6YikhbTQ"
+SOURCE = '0'
+#SOURCE = "https://www.youtube.com/watch?v=-Np6YikhbTQ"
 CONF_THRES = 0.1
 IOU_THRES = 0.4
 CLASSES = None
@@ -35,7 +35,7 @@ cv2.resizeWindow("Parameters", 640,240)
 cv2.createTrackbar("CONF_THRES", "Parameters", 10, 100,(lambda a: None))
 cv2.createTrackbar("IOU_THRES", "Parameters", 20, 100,(lambda a: None))
 cv2.createTrackbar("MAX_DET", "Parameters", 1, 10,(lambda a: None))
-cv2.createTrackbar("FOCAL_LENGTH", "Parameters", 560, 1000,(lambda a: None))
+cv2.createTrackbar("FOCAL_LENGTH", "Parameters", 670, 1000,(lambda a: None))
 
 #Load model
 model = DetectMultiBackend(MODEL_PATH) # load model best.pt
@@ -100,10 +100,14 @@ for path, im, im0s, vid_cap, s in dataset:    #Iterate through Frames
                     y2 = int(xyxy[3].item())
                     xmid = int((x1+x2)/2)
                     d = (2.8*FOCAL_LENGTH)/(x2-x1)
-                    drounded = round(d, 1)
+                    dRounded = round(d, 1)
                     horiz = ((abs(320-xmid))*2.8)/(x2-x1)
-                    theta = math.atan(horiz/d)
-                    thetarounded = str(round(math.degrees(theta)))+ ' degrees'
+                    theta = math.degrees(math.atan(horiz/d))
+
+                    if xmid < 320:
+                        theta = theta * -1
+                    thetaRounded = int(theta)
+                    thetaStr = str(round(math.degrees(theta)))+ ' degrees'
                     p1 = xmid, y2
                     p2 = 320, 480
                     p3 = 320, y2
@@ -117,10 +121,10 @@ for path, im, im0s, vid_cap, s in dataset:    #Iterate through Frames
                     q=20
                     if xmid> 320:
                         q = -150
-                    cv2.putText(im0, thetarounded, (320+q, y2), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (255, 0, 0), 2)
-                    cv2.putText(im0, str(drounded)+'cm', (a, b), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 255), 2)
+                    cv2.putText(im0, thetaStr, (320+q, y2), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (255, 0, 0), 2)
+                    cv2.putText(im0, str(dRounded)+'cm', (a, b), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 255), 2)
 
-                    GUI.add_obj(Obstacle(str(names[c]), theta, d ))
+                    GUI.add_obj(Obstacle(str(names[c]), thetaRounded, d ))
                     GUI.run_1_loop()
 
 
