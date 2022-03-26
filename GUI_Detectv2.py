@@ -73,7 +73,7 @@ for path, im, im0s, vid_cap, s in dataset:    #Iterate through Frames
         MAX_DET = cv2.getTrackbarPos("MAX_DET", "Parameters")
         pred = non_max_suppression(pred, CONF_THRES, IOU_THRES, CLASSES, agnostic=False, max_det=MAX_DET)
         dt[2] += time_sync() - t3
-        
+        GUI.run_1_loop()
         #display detection
         for i, det in enumerate(pred):         #Iterate Through Objects Detected Per Frame??
             p, im0, frame = path[i], im0s[i].copy(), dataset.count
@@ -90,7 +90,7 @@ for path, im, im0s, vid_cap, s in dataset:    #Iterate through Frames
                     n = (det[:, -1] == c).sum()  # detections per class
                     s += f"{n} {names[int(c)]}{'s' * (n > 1)}, "  # add to string
                 
-                GUI.run_1_loop()   #Display sprites before next batch is processed
+                # GUI.run_1_loop()   #Display sprites before next batch is processed
 
                 # Write results
                 for *xyxy, conf, cls in reversed(det):
