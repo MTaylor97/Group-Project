@@ -19,7 +19,7 @@ import constants
 
 #Config Values
 SOURCE = '0'
-#SOURCE = "https://www.youtube.com/watch?v=-Np6YikhbTQ"
+# SOURCE = "https://www.youtube.com/watch?v=-Np6YikhbTQ"
 CONF_THRES = 0.1
 IOU_THRES = 0.4
 CLASSES = None
@@ -45,7 +45,7 @@ print("Model Loaded...")
 model.warmup() #warming up model
 
 dataset = LoadStreams(SOURCE, img_size=160, stride=stride, auto=pt)
-GUI = GUI()
+GUI = GUI() #make GUI
 
 #running interfene
 dt, seen = [0.0, 0.0, 0.0], 0

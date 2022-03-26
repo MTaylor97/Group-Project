@@ -21,8 +21,12 @@ class GUI:
         self.all_sprites = pygame.sprite.Group()
         self.bus = Bus()
         # self.O = Obstacle('Person', 90, 15)
-        self.all_sprites.add(self.bus)#, self.O)
+        self.all_sprites.add(self.bus)
+        self.all_sprites.update()
         self.all_sprites.draw(self.screen)
+        pygame.display.update()
+
+        
 
     def add_obj(self, O):
         self.all_sprites.add(O)
