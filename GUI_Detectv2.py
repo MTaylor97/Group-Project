@@ -135,5 +135,5 @@ for path, im, im0s, vid_cap, s in dataset:    #Iterate through Frames
             im0 = annotator.result()
             cv2.imshow(str(p), im0)
         if cv2.waitKey(1) & 0xFF == ord('q'):
-            pygame.quit()
+            GUI.quit() #makes sure pygame safely quits out
             break

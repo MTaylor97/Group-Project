@@ -26,6 +26,10 @@ class GUI:
         self.all_sprites.draw(self.screen)
         pygame.display.update()
 
+
+    def quit(self):
+        pygame.quit()
+
         
 
     def add_obj(self, O):
