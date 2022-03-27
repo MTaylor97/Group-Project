@@ -55,8 +55,8 @@ GUI = GUI()
 #running interfene
 dt, seen = [0.0, 0.0, 0.0], 0
 for path, im, im0s, vid_cap, s in dataset:    #Iterate through Frames
-        GUI.all_sprites.empty()
-        GUI.all_sprites.add(GUI.bus)
+        # GUI.all_sprites.empty()
+        # GUI.all_sprites.add(GUI.bus)
         #GUI.screen.fill((255,255,255))
         t1 = time_sync()
         im = torch.from_numpy(im)
