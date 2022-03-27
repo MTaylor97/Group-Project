@@ -21,33 +21,20 @@ class GUI:
         self.all_sprites = pygame.sprite.Group()
         self.bus = Bus()
         # self.O = Obstacle('Person', 90, 15)
-        self.all_sprites.add(self.bus)
-        self.all_sprites.update()
+        self.all_sprites.add(self.bus)#, self.O)
         self.all_sprites.draw(self.screen)
-        pygame.display.update()
-
-
-    def quit(self):
-        pygame.quit()
-
-        
 
     def add_obj(self, O):
         self.all_sprites.add(O)
 
     
     def run_1_loop(self):
-        # self.all_sprites.empty()
-        # self.all_sprites.add(self.bus)
-
         self.all_sprites.update()
         pygame.display.update()
+
         self.screen.fill(constants.white)
         self.draw_distances()
         self.all_sprites.draw(self.screen)
-
-        self.all_sprites.empty()
-        self.all_sprites.add(self.bus)
 
 
     def draw_distance(self):
