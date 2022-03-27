@@ -79,6 +79,7 @@ for path, im, im0s, vid_cap, s in dataset:    #Iterate through Frames
         pred = non_max_suppression(pred, CONF_THRES, IOU_THRES, CLASSES, agnostic=False, max_det=MAX_DET)
         dt[2] += time_sync() - t3
         
+        GUI.run_1_loop()
         #display detection
         for i, det in enumerate(pred):         #Iterate Through Objects Detected Per Frame??
             p, im0, frame = path[i], im0s[i].copy(), dataset.count
@@ -133,7 +134,7 @@ for path, im, im0s, vid_cap, s in dataset:    #Iterate through Frames
                     cv2.putText(im0, str(dRounded)+'cm', (a, b), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 255), 2)
 
                     GUI.add_obj(Obstacle(str(names[c]), thetaRounded, d ))
-                    GUI.run_1_loop()
+                    
 
 
 
