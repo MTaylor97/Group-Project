@@ -33,9 +33,9 @@ class Obstacle(pygame.sprite.Sprite):
         self.y = (constants.HEIGHT/2) - math.cos(math.radians(angle))*distance*self.distance_sf
         #print(self.y)
 
-        if self.type == 'person':
+        if self.type == 'soldier':
             self.image = sprite_sheet.get_image(30, 0, 9,23, 4, constants.white).convert_alpha()
-        elif self.type == 'car':
+        elif self.type == 'redcar':
             self.image = sprite_sheet.get_image(60, 0, 30, 30, 4, constants.white).convert_alpha()
 
         self.rect = self.image.get_rect(center=(self.x, self.y))

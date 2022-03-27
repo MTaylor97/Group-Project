@@ -2,10 +2,13 @@ from models.common import DetectMultiBackend
 from utils.datasets import LoadStreams
 from utils.torch_utils import time_sync
 import torch
-from utils.general import (non_max_suppression,scale_coords)
+from utils.general import (LOGGER, check_file, check_img_size, check_imshow, check_requirements, colorstr,
+                           increment_path, non_max_suppression, print_args, scale_coords, strip_optimizer, xyxy2xywh)
 from utils.plots import Annotator, colors
 import cv2
 import math
+
+
 
 import sys
 from pygame.locals import *
@@ -23,36 +26,40 @@ SOURCE = '0'
 CONF_THRES = 0.1
 IOU_THRES = 0.4
 CLASSES = None
-MAX_DET = 1
+MAX_DET = 5
 FOCAL_LENGTH = 670
+imgsz=(640, 640)
 
 #Path of the model:
-MODEL_PATH = 'required/best.pt' #change it to whichever you want to test to i.e. .tflite, .pb(tensorflow) or .pt(pytorch)
+MODEL_PATH = 'required/best.pt'  #change it to whichever you want to test to i.e. .tflite, .pb(tensorflow) or .pt(pytorch)
 
 #Config parameters
 cv2.namedWindow("Parameters")
 cv2.resizeWindow("Parameters", 640,240)
 cv2.createTrackbar("CONF_THRES", "Parameters", 10, 100,(lambda a: None))
 cv2.createTrackbar("IOU_THRES", "Parameters", 20, 100,(lambda a: None))
-cv2.createTrackbar("MAX_DET", "Parameters", 1, 10,(lambda a: None))
+cv2.createTrackbar("MAX_DET", "Parameters", 5, 10,(lambda a: None))
 cv2.createTrackbar("FOCAL_LENGTH", "Parameters", 670, 1000,(lambda a: None))
 
 #Load model
 model = DetectMultiBackend(MODEL_PATH) # load model best.pt
 stride, names, pt = model.stride, model.names, model.pt
+imgsz = check_img_size(imgsz, s=stride)
 print("Model Loaded...")
 
 model.warmup() #warming up model
 
-dataset = LoadStreams(SOURCE, img_size=160, stride=stride, auto=pt)
+
+dataset = LoadStreams(SOURCE, img_size=imgsz, stride=stride, auto=pt) #may need to change imgsz
 GUI = GUI() #make GUI
+
 
 #running interfene
 dt, seen = [0.0, 0.0, 0.0], 0
 for path, im, im0s, vid_cap, s in dataset:    #Iterate through Frames
-        # GUI.all_sprites.empty()
-        # GUI.all_sprites.add(GUI.bus)
-       # GUI.screen.fill((255,255,255))
+        GUI.all_sprites.empty()
+        GUI.all_sprites.add(GUI.bus)
+        #GUI.screen.fill((255,255,255))
         t1 = time_sync()
         im = torch.from_numpy(im)
         im = im.half() if model.fp16 else im.float()  # uint8 to fp16/32
@@ -101,9 +108,13 @@ for path, im, im0s, vid_cap, s in dataset:    #Iterate through Frames
                     x2 = int(xyxy[2].item())
                     y2 = int(xyxy[3].item())
                     xmid = int((x1+x2)/2)
-                    d = (2.8*FOCAL_LENGTH)/(x2-x1)
+                    if names[c] == "soldier":
+                        d = (2.8 * FOCAL_LENGTH) / (x2 - x1)
+                        horiz = ((abs(320 - xmid)) * 2.8) / (x2 - x1)
+                    elif names[c] == "redcar":
+                        d = (5.7 * FOCAL_LENGTH) / (y2 - y1)
+                        horiz = ((abs(320 - xmid)) * 5.7) / (y2 - y1)
                     dRounded = round(d, 1)
-                    horiz = ((abs(320-xmid))*2.8)/(x2-x1)
                     theta = math.degrees(math.atan(horiz/d))
                     if xmid < 320:
                         theta = theta * -1
@@ -126,7 +137,7 @@ for path, im, im0s, vid_cap, s in dataset:    #Iterate through Frames
                     cv2.putText(im0, str(dRounded)+'cm', (a, b), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 255), 2)
 
                     GUI.add_obj(Obstacle(str(names[c]), thetaRounded, d ))
-                
+
 
 
 

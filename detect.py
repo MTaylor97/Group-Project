@@ -182,6 +182,10 @@ def run(weights=ROOT / 'yolov5s.pt',  # model.pt path(s)
                         x2 = int(xyxy[2].item())
                         y2 = int(xyxy[3].item())
                         xmid = int((x1+x2)/2)
+                        if names[c] == "soldier":
+                            d = (2.8*670)/(x2-x1)
+                        elif names[c] == "redcar":
+                            d = (5.7 * 670) / (y2 - y1)
                         d = (2.8*730)/(x2-x1)
                         drounded = round(d, 1)
                         horiz = ((abs(320-xmid))*2.8)/(x2-x1)
