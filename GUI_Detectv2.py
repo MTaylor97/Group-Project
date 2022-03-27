@@ -99,7 +99,10 @@ for path, im, im0s, vid_cap, s in dataset:    #Iterate through Frames
                     x2 = int(xyxy[2].item())
                     y2 = int(xyxy[3].item())
                     xmid = int((x1+x2)/2)
-                    d = (2.8*FOCAL_LENGTH)/(x2-x1)
+                    if names[c] == "soldier":
+                        d = (2.8*FOCAL_LENGTH)/(x2-x1)
+                    elif names[c] == "redcar":
+                        d = (5.7 *FOCAL_LENGTH) / (y2 - y1)    
                     dRounded = round(d, 1)
                     horiz = ((abs(320-xmid))*2.8)/(x2-x1)
                     theta = math.degrees(math.atan(horiz/d))
