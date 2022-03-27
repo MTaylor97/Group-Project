@@ -38,7 +38,7 @@ cv2.namedWindow("Parameters")
 cv2.resizeWindow("Parameters", 640,240)
 cv2.createTrackbar("CONF_THRES", "Parameters", 10, 100,(lambda a: None))
 cv2.createTrackbar("IOU_THRES", "Parameters", 20, 100,(lambda a: None))
-cv2.createTrackbar("MAX_DET", "Parameters", 1, 10,(lambda a: None))
+cv2.createTrackbar("MAX_DET", "Parameters", 5, 10,(lambda a: None))
 cv2.createTrackbar("FOCAL_LENGTH", "Parameters", 670, 1000,(lambda a: None))
 
 #Load model
