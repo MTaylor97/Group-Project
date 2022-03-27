@@ -22,7 +22,7 @@ import constants
 
 #Config Values
 SOURCE = '0'
-#SOURCE = "https://www.youtube.com/watch?v=-Np6YikhbTQ"
+# SOURCE = "https://www.youtube.com/watch?v=-Np6YikhbTQ"
 CONF_THRES = 0.1
 IOU_THRES = 0.4
 CLASSES = None
@@ -49,8 +49,10 @@ print("Model Loaded...")
 
 model.warmup() #warming up model
 
-dataset = LoadStreams(SOURCE, img_size=imgsz, stride=stride, auto=pt)
-GUI = GUI()
+
+dataset = LoadStreams(SOURCE, img_size=imgsz, stride=stride, auto=pt) #may need to change imgsz
+GUI = GUI() #make GUI
+
 
 #running interfene
 dt, seen = [0.0, 0.0, 0.0], 0
@@ -78,7 +80,7 @@ for path, im, im0s, vid_cap, s in dataset:    #Iterate through Frames
         MAX_DET = cv2.getTrackbarPos("MAX_DET", "Parameters")
         pred = non_max_suppression(pred, CONF_THRES, IOU_THRES, CLASSES, agnostic=False, max_det=MAX_DET)
         dt[2] += time_sync() - t3
-        
+        GUI.run_1_loop()
         #display detection
         for i, det in enumerate(pred):         #Iterate Through Objects Detected Per Frame??
             p, im0, frame = path[i], im0s[i].copy(), dataset.count
@@ -94,7 +96,9 @@ for path, im, im0s, vid_cap, s in dataset:    #Iterate through Frames
                 for c in det[:, -1].unique():
                     n = (det[:, -1] == c).sum()  # detections per class
                     s += f"{n} {names[int(c)]}{'s' * (n > 1)}, "  # add to string
-                    
+                
+                # GUI.run_1_loop()   #Display sprites before next batch is processed
+
                 # Write results
                 for *xyxy, conf, cls in reversed(det):
                     FOCAL_LENGTH = cv2.getTrackbarPos("FOCAL_LENGTH", "Parameters")
@@ -133,7 +137,7 @@ for path, im, im0s, vid_cap, s in dataset:    #Iterate through Frames
                     cv2.putText(im0, str(dRounded)+'cm', (a, b), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 255), 2)
 
                     GUI.add_obj(Obstacle(str(names[c]), thetaRounded, d ))
-                    GUI.run_1_loop()
+
 
 
 
@@ -142,5 +146,5 @@ for path, im, im0s, vid_cap, s in dataset:    #Iterate through Frames
             im0 = annotator.result()
             cv2.imshow(str(p), im0)
         if cv2.waitKey(1) & 0xFF == ord('q'):
-            pygame.quit()
+            GUI.quit() #makes sure pygame safely quits out
             break
