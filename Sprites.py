@@ -10,7 +10,16 @@ class Bus(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         self.type = 'bus'
-        self.image = sprite_sheet.get_image(0, 0, 22, 26, 4, constants.white).convert_alpha()
+        self.image = sprite_sheet.get_image(150, 0, 24, 44, 4, constants.white).convert_alpha()
+        self.x = constants.WIDTH/2
+        self.y = constants.HEIGHT/2 + 88 # measure from front of bus
+        self.rect = self.image.get_rect(center=(self.x, self.y))
+
+class BG(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.type = 'bg'
+        self.image = sprite_sheet.get_image(0, 0, 150, 150, 4, None).convert_alpha()
         self.x = constants.WIDTH/2
         self.y = constants.HEIGHT/2
         self.rect = self.image.get_rect(center=(self.x, self.y))
@@ -21,22 +30,22 @@ class Obstacle(pygame.sprite.Sprite):
         self.type = type
         self.angle = angle
         self.distance = distance
-        self.distance_sf = 10 #10pixels == 1cm. So it's 24cm from middle of bus to top of screen.
-
+        self.distance_sf = 5 #10pixels == 1cm. So it's 24cm from middle of bus to top of screen.
         if angle > 0:
             self.x = (constants.WIDTH/2) + math.sin(math.radians(angle))*distance*self.distance_sf
-            #print(self.x)
         else:
             self.x = (constants.WIDTH/2) + math.sin(math.radians(angle))*distance*self.distance_sf
-            #print(self.x)
-
         self.y = (constants.HEIGHT/2) - math.cos(math.radians(angle))*distance*self.distance_sf
-        #print(self.y)
-
+        self.front = (self.x,self.y)
+        
         if self.type == 'soldier':
-            self.image = sprite_sheet.get_image(30, 0, 9,23, 4, constants.white).convert_alpha()
+            self.image = sprite_sheet.get_image(180, 0, 9, 7, 4, constants.white).convert_alpha()
+            
+            self.y -= 14
+            
         elif self.type == 'redcar':
-            self.image = sprite_sheet.get_image(60, 0, 30, 30, 4, constants.white).convert_alpha()
-
+            self.image = sprite_sheet.get_image(190, 0, 19, 35, 4, constants.white).convert_alpha()
+            self.y -= 70
+            
         self.rect = self.image.get_rect(center=(self.x, self.y))
 
