@@ -133,7 +133,8 @@ for path, im, im0s, vid_cap, s in dataset:    #Iterate through Frames
                     cv2.putText(im0, thetaStr, (320+q, y2), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (255, 0, 0), 2)
                     cv2.putText(im0, str(dRounded)+'cm', (a, b), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 255), 2)
 
-                    GUI.obstacle_sprites.add(Obstacle(str(names[c]), thetaRounded, d ))
+                    ###detects the objects###
+                    GUI.obstacle_found(str(names[c]), thetaRounded, d)
                     
 
 
